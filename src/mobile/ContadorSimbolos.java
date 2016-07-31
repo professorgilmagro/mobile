@@ -1,23 +1,6 @@
 /*
-
-- O método público “getTotalConsoantes” que deverá retornar a quantidade total
-de consoantes armazenadas na String (variável de instância).
-- O método público “getConsoante” que deverá retornar a quantidade de uma
-consoante específica (parâmetro do método) que esteja armazenada na String
-(variável de instância).
-- O método público “getTotalVogais” que deverá retornar a quantidade total de
-vogais armazenadas na String (variável de instância).
-- O método público “getVogal” que deverá retornar a quantidade de uma vogal
-específica (parâmetro do método) que esteja armazenada na String (variável de
-instância).
-- O método público “getPalavras” que deverá retornar a quantidade total de
-palavras armazenadas na String (variável de instância).
-- O método público “equals” (sobrescrita de Object) para determinar se dois
-objetos são ou não iguais.
-- O método público “hashCode” (sobrescrita de Object) para determinar o valor
-hash do objeto
-- O método públic “toString” (sobrescrita de Object) para exibir o estado do
-objeto.
+* Classe principal do aplicativo que aceita como entrada uma
+* String qualquer e consiga contar a quantidade de cada símbolo que a compõem
 */
 package mobile;
 
