@@ -1,7 +1,9 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * Disciplina: Programação Mobile
+ * Professor: Guilherme Veloso Neves Oliveira
+ * Atividade: Contador de Símbolos
+ * Objetivo da Atividade: Escreva um aplicativo que aceita como entrada uma
+ * String qualquer e consiga contar a quantidade de cada símbolo que a compõem.
  */
 package mobile;
 
@@ -16,7 +18,7 @@ public class Mobile {
      * @throws java.lang.Exception
      */
     public static void main(String[] args) throws Exception {
-        String text = "Este é    um teste - EEEÊÈÉ S de TY ~ mesmo 2000 !!!!.";
+        String text = " Este é    um teste - EEEÊÈÉ S de TY ~ mesmo 2000 !!!!. ";
         ContadorSimbolos cs = new ContadorSimbolos(text);
         System.out.println(cs);
         System.out.println(cs.getPalavras());

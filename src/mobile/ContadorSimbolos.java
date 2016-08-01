@@ -14,16 +14,16 @@ import java.util.Objects;
 public class ContadorSimbolos {
     
     private String text ;
-    private String vogais = "aeiou";
-    private String consoantes = "bcdfghjklmnpqrstvxwyz";
+    private final String VOGAIS = "aeiou";
+    private final String CONSOANTES = "bcdfghjklmnpqrstvxwyz";
     
     /**
      * Construtor da classe
      * 
-     * @param text 
+     * @param texto 
      */
-    public ContadorSimbolos(String text) {
-        this.text = text;
+    public ContadorSimbolos(String texto) {
+        this.text = texto.trim();
     }
 
     @Override
@@ -77,7 +77,7 @@ public class ContadorSimbolos {
     
     /**
      * Retorna o total de ocorrências de uma determinada letra contida no texto
-     * de entrada desta instância
+     * de entrada ignorando (não sensível) maiúsculas e minúsculas
      * 
      * @param letra
      * 
@@ -85,6 +85,20 @@ public class ContadorSimbolos {
      * @throws java.lang.Exception
      */
     public Integer getLetra( String letra ) throws Exception{
+        return this.getLetra(letra, false) ;
+    }
+    
+    /**
+     * Retorna o total de ocorrências de uma determinada letra contida no texto
+     * de entrada desta instância
+     * 
+     * @param letra
+     * @param caseSensitive
+     * 
+     * @return Integer
+     * @throws java.lang.Exception
+     */
+    public Integer getLetra( String letra, Boolean caseSensitive ) throws Exception{
         char[] letters = letra.toCharArray();
         if ( ! Character.isLetter(letters[0]) ) {
             throw new Exception( "Somente letra é permitido." ) ;
@@ -94,18 +108,23 @@ public class ContadorSimbolos {
             throw new Exception( "Informe apenas uma letra." ) ;
         }
         
-        return this.text.split(letra).length-1;
+        String texto = this.text ;
+        if ( ! caseSensitive ) {
+            letra = letra.toLowerCase() ;
+            texto = texto.toLowerCase() ;
+        }
+        return texto.split(letra).length-1;
     }
     
     /**
-     * Retorna o total de consoantes contidas no texto armazenado neste objeto
+     * Retorna o total de CONSOANTES contidas no texto armazenado neste objeto
      * 
      * @return Integer
      */
     public Integer getTotalConsoantes(){
         Integer total = 0;
         for (Character ch : this.text.toCharArray()) {
-            if ( this.consoantes.contains(ch.toString().toLowerCase()) ){
+            if ( this.CONSOANTES.contains(ch.toString().toLowerCase()) ){
                 total ++;
             }
         }
@@ -114,8 +133,8 @@ public class ContadorSimbolos {
     }
     
     /**
-     * Retorna o total de ocorrências de uma consoante sensível a maiúsculas e
-     * minúsculas
+     * Retorna o total de ocorrências de uma consoante não-sensível a maiúsculas 
+     * e minúsculas
      * 
      * @param consoante
      * 
@@ -141,7 +160,7 @@ public class ContadorSimbolos {
             throw new Exception( "Informe apenas uma consoante." ) ;
         }
         
-        if ( ! this.consoantes.contains(consoante.toLowerCase()) ) {
+        if ( ! this.CONSOANTES.contains(consoante.toLowerCase()) ) {
             throw new Exception( "Não é uma consoante" ) ;
         }
         
@@ -155,7 +174,7 @@ public class ContadorSimbolos {
     }
     
     /**
-     * Retorna o total de vogais contidas no texto armazenado neste objeto
+     * Retorna o total de VOGAIS contidas no texto armazenado neste objeto
      * 
      * @return Integer
      */
@@ -163,7 +182,7 @@ public class ContadorSimbolos {
         Integer total = 0;
         String texto = this.stripAccents(this.text);
         for (Character ch : texto.toCharArray()) {
-            if ( this.vogais.contains(ch.toString().toLowerCase()) ){
+            if ( this.VOGAIS.contains(ch.toString().toLowerCase()) ){
                 total ++;
             }
         }
@@ -172,8 +191,8 @@ public class ContadorSimbolos {
     }
     
     /**
-     * Retorna o total de ocorrências de uma vogal específica contida na
-     * instância desta classe
+     * Retorna o total de ocorrências de uma vogal não-sensível a maiúsculas 
+     * e minúsculas
      * 
      * @param vogal
      * 
@@ -181,16 +200,36 @@ public class ContadorSimbolos {
      * @throws java.lang.Exception
      */
     public Integer getVogal( String vogal ) throws Exception{
+        return this.getVogal(vogal, false) ;
+    }
+    
+    /**
+     * Retorna o total de ocorrências de uma vogal específica contida na
+     * instância desta classe
+     * 
+     * @param vogal
+     * @param caseSensitive
+     * 
+     * @return Integer
+     * @throws java.lang.Exception
+     */
+    public Integer getVogal( String vogal, Boolean caseSensitive ) throws Exception{
         if ( vogal.length() > 1 ) {
             throw new Exception( "Informe apenas uma vogal." ) ;
         }
         
         vogal = this.stripAccents(vogal).toLowerCase();
-        if ( ! this.vogais.contains(vogal) ) {
+        if ( ! this.VOGAIS.contains(vogal) ) {
             throw new Exception( "Não é uma vogal" ) ;
         }
+        
+        String texto = this.text ;
+        if ( ! caseSensitive ) {
+            vogal = vogal.toLowerCase() ;
+            texto = texto.toLowerCase() ;
+        }
                         
-        return this.text.split(vogal).length-1;
+        return texto.split(vogal).length-1;
     }
     
     /**
@@ -207,21 +246,42 @@ public class ContadorSimbolos {
     
     /**
      * Retorna o total de ocorrências de uma palavra específica contida na
-     * instância desta classe
+     * instância desta classe sem diferenciação de maiúsculas/minúsculas
      * 
      * @param palavra
      * 
      * @return Integer
+     * @throws java.lang.Exception
      */
     public Integer getPalavra( String palavra ) throws Exception{
+        return this.getPalavra(palavra, false);
+    }
+    
+    /**
+     * Retorna o total de ocorrências de uma palavra específica contida na
+     * instância desta classe
+     * 
+     * @param palavra
+     * @param caseSensitive
+     * 
+     * @return Integer
+     * @throws java.lang.Exception
+     */
+    public Integer getPalavra( String palavra, Boolean caseSensitive ) throws Exception{
         if ( palavra.split(" ").length > 1 ) {
             throw new Exception( "Informe apenas uma palavra." ) ;
         }
         
         palavra = this.stripAccents(palavra);
+        String texto = this.text ;
+        if ( ! caseSensitive ) {
+            palavra = palavra.toLowerCase() ;
+            texto = texto.toLowerCase();
+        }
+        
         Integer total = 0 ;
-        for( String item : this.text.split(" ") ) {
-            if ( item.equalsIgnoreCase(palavra) ) {
+        for( String item : texto.split(" ") ) {
+            if ( item.equals(palavra) ) {
                 total++;
             }
         }
@@ -241,4 +301,3 @@ public class ContadorSimbolos {
        return texto.replaceAll("[\\p{InCombiningDiacriticalMarks}]", "");
     }
 }
-
